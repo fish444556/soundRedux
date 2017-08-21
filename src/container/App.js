@@ -16,7 +16,7 @@ class App extends React.Component {
     return (
       <div className='container'>
         <div className='content'>
-          <Songs songs={songs} />
+          <Songs {...this.props} />
 
         </div>
       </div>

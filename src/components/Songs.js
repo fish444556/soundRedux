@@ -1,5 +1,6 @@
 import React from 'react'
 import SongsCard from '../components/SongsCard'
+import { changeActiveSong } from '../actions/songs'
 
 class Songs extends React.Component {
   constructor(props) {
@@ -7,13 +8,25 @@ class Songs extends React.Component {
     this.renderSongs.bind(this)
   }
 
+  changeActiveSong(index) {
+    const { dispatch, songs } = this.props
+    dispatch(changeActiveSong(index))
+  }
+
   renderSongs() {
     const chunk = 5
     const { items } = this.props.songs
     let res = []
     for (let i = 0; i < items.length; i += chunk) {
-      let songCards = items.slice(i, i + chunk).map((song) => {
-        return <div className='col-1-5'><SongsCard song={song} key={song.id} /></div>
+      let songCards = items.slice(i, i + chunk).map((song, index) => {
+        return (
+          <div className='col-1-5' key={song.id}>
+            <SongsCard
+              song={song}
+              changeActiveSong={this.changeActiveSong.bind(this, i + index)}
+            />
+          </div>
+        )
       })
 
       if (songCards.length < chunk) {

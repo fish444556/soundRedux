@@ -4,10 +4,18 @@ function songs(state = {
   items: [],
 }, action) {
   switch(action.type) {
+    case types.CHANGE_ACTIVE_SONG:
+      console.log(action.song)
+      if (action.song === null) {
+        return Object.assign({}, state, {activeSong: null})
+      }
+      return Object.assign({}, state, {activeSong: action.song})
+
     case types.RECEIVE_SONGS:
       return Object.assign({}, state, {
         items: action.songs,
       })
+
     default:
       return state
   }
