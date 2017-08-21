@@ -12,7 +12,7 @@ export function fetchSongs() {
 export function changeActiveSong(activeSongIndex) {
   return {
     type: types.CHANGE_ACTIVE_SONG,
-    song: activeSongIndex,
+    activeSongIndex: activeSongIndex,
   }
 }
 

@@ -9,8 +9,10 @@ class Songs extends React.Component {
   }
 
   changeActiveSong(index) {
+    console.log(index)
     const { dispatch, songs } = this.props
     dispatch(changeActiveSong(index))
+
   }
 
   renderSongs() {

@@ -4,6 +4,7 @@ import { fetchSongs } from '../actions/songs'
 
 
 import Songs from '../components/Songs'
+import SongPlayer from '../components/SongPlayer'
 
 class App extends React.Component {
   componentDidMount() {
@@ -13,12 +14,15 @@ class App extends React.Component {
 
   render() {
     const { songs } = this.props
+    console.log(songs.items[songs.activeSongIndex])
     return (
-      <div className='container'>
-        <div className='content'>
-          <Songs {...this.props} />
-
+      <div>
+        <div className='container'>
+          <div className='content'>
+            <Songs {...this.props} />
+          </div>
         </div>
+        <SongPlayer song={songs.items[songs.activeSongIndex]}/>
       </div>
     )
   }
