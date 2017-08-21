@@ -14,8 +14,11 @@ class App extends React.Component {
   render() {
     const { songs } = this.props
     return (
-      <div>
-        <Songs songs={songs} />
+      <div className='container'>
+        <div className='content'>
+          <Songs songs={songs} />
+
+        </div>
       </div>
     )
   }

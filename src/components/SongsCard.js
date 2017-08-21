@@ -6,7 +6,7 @@ class SongsCard extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className='card song-card'>
         <p>
           {this.props.song.id}
         </p>

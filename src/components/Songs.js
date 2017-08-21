@@ -17,6 +17,12 @@ class Songs extends React.Component {
         <SongsCard song={song} key={song.id} />
       ))
 
+      if (songCards.length < chunk) {
+        for (let j = 0; j < chunk - songCards.length + 1; j++) {
+          songCards.push(<div className='song-card-placeholder'></div>)
+        }
+      }
+
       res.push(
         <div className='songs-row'> { songCards }</div>
       )
