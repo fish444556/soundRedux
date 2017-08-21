@@ -8,9 +8,6 @@
   margin: 0 auto;
 }
 
-.clearfix:after {
-
-}
 
 .clearfix:after {
   visibility: hidden;
@@ -25,3 +22,9 @@
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
+
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
