@@ -2,19 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import SongDetails from './SongDetails'
-import { formatStreamUrl } from '../utils/FormatUtils'
+import { formatSeconds, formatStreamUrl } from '../utils/FormatUtils'
 
 class SongPlayer extends React.Component {
 
   constructor(props) {
     super(props)
     this.togglePlay = this.togglePlay.bind(this)
+    this.handleTimeUpdate = this.handleTimeUpdate.bind(this)
     this.state = {
+      currentTime: 0,
+      duration: 0,
       isPlaying: false
     }
   }
 
   componentDidMount() {
+    this.bindEvents()
     const audioElm = ReactDOM.findDOMNode(this.refs.audio)
     this.setState({isPlaying: true})
     audioElm.play()
@@ -29,6 +33,32 @@ class SongPlayer extends React.Component {
     audioElm.play()
   }
 
+  componentWillUnmount() {
+    const audioElm = ReactDOM.findDOMNode(this.refs.audio)
+    audioElm.removeEventListener('timeupdate', this.handleTimeUpdate, false)
+  }
+
+  bindEvents() {
+    const audioElm = ReactDOM.findDOMNode(this.refs.audio)
+    audioElm.addEventListener('timeupdate', this.handleTimeUpdate, false)
+  }
+
+  handleTimeUpdate(e) {
+    const audioElm = e.currentTarget
+    const currentTime = Math.floor(audioElm.currentTime)
+    // const { currentTime } = this.state
+
+    if (currentTime === this.state.currentTime) {
+      return
+    }
+
+    this.setState({
+      currentTime: currentTime,
+      duration: Math.floor(audioElm.duration)
+    })
+    console.log(currentTime + " : " + audioElm.duration)
+  }
+
   togglePlay() {
     const audioElm = ReactDOM.findDOMNode(this.refs.audio)
     console.log("tttttttt")
@@ -41,9 +71,23 @@ class SongPlayer extends React.Component {
     }
   }
 
+  renderDurationBar() {
+    const { currentTime, duration } = this.state
+    if (duration !== 0) {
+      const width = currentTime/duration * 100
+      console.log(currentTime)
+      return (
+        <div
+          className='song-player-seek-duration-bar'
+          style={{width: `${width}%`}}>
+        </div>
+      )
+    }
+  }
+
   render() {
     const { song } = this.props
-    const { isPlaying } = this.state
+    const { isPlaying, currentTime, duration } = this.state
 
     const image = song.artwork_url.replace('large', 't300x300')
 
@@ -70,9 +114,20 @@ class SongPlayer extends React.Component {
                 <i className='icon ion-ios-fastforward'></i>
               </div>
             </div>
+            <div className='song-player-seek'>
+              <div className='song-player-seek-bar'>
+                {this.renderDurationBar()}
+              </div>
+              <div className='song-player-time'>
+                <span>{formatSeconds(currentTime)}</span>
+                <span className='song-player-time-divider'>/</span>
+                <span>{formatSeconds(duration)}</span>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+       </div>
     )
   }
 }
