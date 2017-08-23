@@ -1,6 +1,8 @@
 var webpack = require('webpack')
 var path = require('path')
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 module.exports = {
   devtool: 'source-map',
   entry: {
@@ -26,6 +28,10 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
+      {
         test: /\.scss$/,
         use: [{
           loader: "style-loader" // creates style nodes from JS strings
@@ -36,5 +42,8 @@ module.exports = {
         }]
       },
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('css/bundle.css')
+  ]
 }

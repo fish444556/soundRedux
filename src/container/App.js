@@ -14,7 +14,6 @@ class App extends React.Component {
 
   renderSongPlayer() {
     const { songs } = this.props
-    debugger
     if (!songs.activeSongIndex) {
       return
     }
