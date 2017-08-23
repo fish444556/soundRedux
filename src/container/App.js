@@ -12,6 +12,16 @@ class App extends React.Component {
     dispatch(fetchSongs())
   }
 
+  renderSongPlayer() {
+    const { songs } = this.props
+    debugger
+    if (!songs.activeSongIndex) {
+      return
+    }
+    return <SongPlayer song={songs.items[songs.activeSongIndex]}/>
+
+  }
+
   render() {
     const { songs } = this.props
     console.log(songs.items[songs.activeSongIndex])
@@ -22,7 +32,7 @@ class App extends React.Component {
             <Songs {...this.props} />
           </div>
         </div>
-        <SongPlayer song={songs.items[songs.activeSongIndex]}/>
+        {this.renderSongPlayer()}
       </div>
     )
   }
